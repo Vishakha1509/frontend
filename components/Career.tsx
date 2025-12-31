@@ -40,7 +40,7 @@ export default function Career() {
         const fetchJobs = async () => {
             try {
                 setLoading(true)
-                const response = await fetch('http://localhost:8000/api/jobs/')
+                const response = await fetch('https://growthify-backend-hnb8.onrender.com/api/jobs/')
                 if (!response.ok) {
                     throw new Error('Failed to fetch jobs')
                 }
