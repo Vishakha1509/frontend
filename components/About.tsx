@@ -1,65 +1,87 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { fetchSiteSettings } from '@/lib/api'
-import type { SiteSettings } from '@/lib/api'
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useEffect, useState } from "react";
+import { fetchSiteSettings } from "@/lib/api";
+import type { SiteSettings } from "@/lib/api";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
-function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const [count, setCount] = useState(0)
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
+function AnimatedCounter({
+  value,
+  suffix = "",
+}: {
+  value: number;
+  suffix?: string;
+}) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
     if (isInView) {
-      let start = 0
-      const duration = 2000 // 2 seconds
-      const increment = value / (duration / 16) // 60fps
+      let start = 0;
+      const duration = 2000; // 2 seconds
+      const increment = value / (duration / 16); // 60fps
 
       const timer = setInterval(() => {
-        start += increment
+        start += increment;
         if (start >= value) {
-          setCount(value)
-          clearInterval(timer)
+          setCount(value);
+          clearInterval(timer);
         } else {
-          setCount(Math.floor(start))
+          setCount(Math.floor(start));
         }
-      }, 16)
+      }, 16);
 
-      return () => clearInterval(timer)
+      return () => clearInterval(timer);
     }
-  }, [isInView, value])
+  }, [isInView, value]);
 
   return (
     <span ref={ref} className="tabular-nums">
-      {count}{suffix}
+      {count}
+      {suffix}
     </span>
-  )
+  );
 }
 
 export default function About() {
-  const [settings, setSettings] = useState<SiteSettings | null>(null)
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
 
   useEffect(() => {
-    fetchSiteSettings()
-      .then(setSettings)
-      .catch(console.error)
-  }, [])
+    fetchSiteSettings().then(setSettings).catch(console.error);
+  }, []);
 
   const stats = [
-    { icon: '🚀', value: 150, suffix: '+', label: 'Projects Delivered', color: 'from-blue-500 to-cyan-500' },
-    { icon: '😊', value: 100, suffix: '+', label: 'Happy Clients', color: 'from-purple-500 to-pink-500' },
-    { icon: '⭐', value: 5, suffix: '', label: 'Years Experience', color: 'from-orange-500 to-red-500' },
-    { icon: '🏆', value: 20, suffix: '+', label: 'Awards Won', color: 'from-green-500 to-emerald-500' },
-  ]
+    {
+      icon: "🚀",
+      value: 150,
+      suffix: "+",
+      label: "Projects Delivered",
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      icon: "😊",
+      value: 100,
+      suffix: "+",
+      label: "Happy Clients",
+      color: "from-purple-500 to-pink-500",
+    },
+    {
+      icon: "⭐",
+      value: 2,
+      suffix: "",
+      label: "Years Experience",
+      color: "from-orange-500 to-red-500",
+    },
+  ];
 
   const features = [
-    { icon: '💡', title: 'Innovation', desc: 'Cutting-edge solutions' },
-    { icon: '🎯', title: 'Precision', desc: 'Attention to detail' },
-    { icon: '⚡', title: 'Speed', desc: 'Fast delivery' },
-    { icon: '🤝', title: 'Support', desc: '24/7 assistance' },
-  ]
+    { icon: "💡", title: "Innovation", desc: "Cutting-edge solutions" },
+    { icon: "🎯", title: "Precision", desc: "Attention to detail" },
+    { icon: "⚡", title: "Speed", desc: "Fast delivery" },
+    { icon: "🤝", title: "Support", desc: "24/7 assistance" },
+  ];
 
   if (!settings) {
     return (
@@ -74,11 +96,14 @@ export default function About() {
           </motion.div>
         </div>
       </section>
-    )
+    );
   }
 
   return (
-    <section id="about" className="py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+    <section
+      id="about"
+      className="py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden"
+    >
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -91,7 +116,7 @@ export default function About() {
           transition={{
             duration: 20,
             repeat: Infinity,
-            repeatType: 'reverse',
+            repeatType: "reverse",
           }}
         />
         <motion.div
@@ -104,7 +129,7 @@ export default function About() {
           transition={{
             duration: 25,
             repeat: Infinity,
-            repeatType: 'reverse',
+            repeatType: "reverse",
           }}
         />
       </div>
@@ -135,7 +160,7 @@ export default function About() {
             transition={{ delay: 0.1 }}
           >
             <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-              {settings.about_title || 'About Us'}
+              {settings.about_title || "About Us"}
             </span>
           </motion.h2>
 
@@ -187,7 +212,9 @@ export default function About() {
                   >
                     {feature.icon}
                   </motion.div>
-                  <h4 className="font-bold text-gray-900 mb-1">{feature.title}</h4>
+                  <h4 className="font-bold text-gray-900 mb-1">
+                    {feature.title}
+                  </h4>
                   <p className="text-sm text-gray-600">{feature.desc}</p>
                 </motion.div>
               ))}
@@ -203,7 +230,10 @@ export default function About() {
             >
               <motion.button
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg"
-                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(139, 92, 246, 0.3)' }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)",
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 Learn More About Us
@@ -235,7 +265,7 @@ export default function About() {
                     className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity`}
                     initial={false}
                   />
-                  
+
                   <motion.div
                     className="relative z-10"
                     whileHover={{ scale: 1.1 }}
@@ -243,12 +273,21 @@ export default function About() {
                     <motion.div
                       className="text-5xl mb-4 inline-block"
                       animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: index * 0.2,
+                      }}
                     >
                       {stat.icon}
                     </motion.div>
-                    <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                    <div
+                      className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}
+                    >
+                      <AnimatedCounter
+                        value={stat.value}
+                        suffix={stat.suffix}
+                      />
                     </div>
                     <p className="text-gray-600 font-medium">{stat.label}</p>
                   </motion.div>
@@ -282,10 +321,11 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            To empower businesses with innovative digital solutions that drive growth and success in the modern world
+            To empower businesses with innovative digital solutions that drive
+            growth and success in the modern world
           </motion.p>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
