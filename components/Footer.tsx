@@ -74,9 +74,17 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: "#", color: "from-blue-600 to-blue-400" },
-    { icon: Instagram, href: "#", color: "from-pink-600 to-purple-600" },
+    { 
+      icon: Instagram, 
+      href: "https://www.instagram.com/growthifyservices/?igsh=YnZqcXk3cGpnZWMy", 
+      color: "from-pink-600 to-purple-600" 
+    },
     { icon: Twitter, href: "#", color: "from-blue-400 to-cyan-400" },
-    { icon: Linkedin, href: "#", color: "from-blue-700 to-blue-500" },
+    { 
+      icon: Linkedin, 
+      href: "https://www.linkedin.com/company/growthifyservices/posts/?feedView=all", 
+      color: "from-blue-700 to-blue-500" 
+    },
   ];
 
   const handleLinkClick = (href: string, e: React.MouseEvent) => {
@@ -123,6 +131,8 @@ export default function Footer() {
                   <motion.a
                     key={i}
                     href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`w-10 h-10 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center`}
                     whileHover={{ scale: 1.15, rotate: 360 }}
                   >
